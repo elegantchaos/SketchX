@@ -8,15 +8,42 @@ Each page of the document will be exported to an asset catalogue, using the page
 
 Each artboard on the page will be exported into the catalogue, using the artboard name to determine the exact path and asset type.
 
-## Example
+If there's a page called "Symbols", it will be ignored.
 
-We have a catalogue called "Assets.xcassets", containing an icon set called "AppIcon", and an image set called "Image".
+
+## Building
+
+Fetch the contents of this repository with `git clone https://github.com/elegantchaos/SketchX.git`.
+
+Build, using `swift build`.
+
+Run with `.build/debug/sketchx`.
+
+
+## Installing
+
+Install by copying the executable somewhere, eg `cp .build/debug/sketchx /usr/local/bin/`.
+
+
+## Usage
+
+If you have a catalogue called "Assets.xcassets", containing an icon set called "AppIcon", and an image set called "Image".
 
 To export into this from Sketch:
 
 - Call your page "Assets".
 - For the iconset, make artboards called `AppIcon.appiconset/Icon16`, `AppIcon.appiconset/Icon32`, etc.
 - For the image, make artboards called `Image.imageset/Image`, `Image.imageset/Image@2x`, etc.
+
+An example document can be seen in `Example/Example.sketch`.
+
+You can modify it and then export with the following command (from the root SketchX folder):
+
+    `swift run sketchx Example/Example.sketch Example/Example/`
+
+
+Try modifying
+
 
 ## Contents.json
 
@@ -28,18 +55,6 @@ in the image/iconset. Once you've done this, Xcode will remember the assignments
 re-export the images, with no further adjustments required in Xcode.
 
 
-## Building
-
-Fetch the contents of this repository with `git clone https://github.com/elegantchaos/SketchX.git`.
-
-Build, using `swift build`.
-
-Run with `.build/debug/sketchx`.
-
-## Installing
-
-Install by copying the executable somewhere, eg `cp .build/debug/sketchx /usr/local/bin/`.
-
 
 ## Future
 
@@ -47,7 +62,6 @@ This is a quick & dirty hack, which could be improved.
 
 Some ideas:
 
-- skip any symbols page
 - pass in the names of page(s) to export
 - pass in alternative names somehow
 - write the Contents.json and create the complete structure if it's missing
