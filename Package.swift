@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "SketchX",
     products: [
-        .executable(name: "sketchx", target: "SketchX")
+        .executable(name: "sketchx", targets: ["SketchX"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
