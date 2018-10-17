@@ -4,6 +4,8 @@ A simple tool to help with exporting Sketch documents to Xcode asset catalogues.
 
 *Note*: This tool can be run manually, but is really intended to be run from a Run Script phase in Xcode, as part of your build.
 
+
+
 ## Usage
 
 ### Single Catalogue
@@ -26,7 +28,6 @@ If you want to use a catalogue name for a page, you can specify it along with th
 
     `sketchx Document.sketch <page>=<catalog> <path>`
 
-
 ### Multiple Catalogues
 
 To export multiple pages in a single go, supply a comma-delimited list of page names:
@@ -44,18 +45,28 @@ Alternatively you can leave out the page name to export all pages:
 *Note*: this will skip any page called "Symbols". If you have a page called Symbols that you want to export, you'll have to name it explicitly.
 
 
+
 ## Building
 
 Fetch the contents of this repository with `git clone https://github.com/elegantchaos/SketchX.git`.
 
-Build, using `swift build`.
+Build and run, using `swift run sketchx`.
 
-Run with `.build/debug/sketchx`.
+After doing this, the built executable can be found in `.build/debug/sketchx`.
+
 
 
 ## Installing
 
-Install by copying the executable somewhere, eg `sudo cp .build/debug/sketchx /usr/local/bin/`.
+If you want to install the executable somewhere, you can just build then copy it:
+
+```
+    swift build
+    sudo cp .build/debug/sketchx /usr/local/bin/
+```
+
+That said, you may be better off just using `swift run sketchx` in your scripts, to ensure that you've always got the latest built copy locally.
+
 
 
 ## Example
@@ -78,6 +89,7 @@ You can modify it and then export with the following command (from the root Sket
 Try modifying the Sketch document and re-exporting; you should see the assets change in Xcode.
 
 
+
 ## Contents.json
 
 For now, `sketchx` doesn't write the `Contents.json` file for you, so you can't use it to create new catalogues/sets.
@@ -95,6 +107,5 @@ This is a quick & dirty hack, which could be improved.
 
 Some ideas:
 
-- pass in alternative names somehow
 - write the Contents.json and create the complete structure if it's missing
 - add a Sketch plugin which downloads/builds/runs this tool from within Sketch
