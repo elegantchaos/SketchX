@@ -2,15 +2,47 @@
 
 A simple tool to help with exporting Sketch documents to Xcode asset catalogues.
 
-Usage: `sketchx Document.sketch PagesToOutput Output/Path/`
-
-The specified pages (a comma-delimited list) of the document will be exported to an asset catalogue, using the page name as the catalogue name.
-
-Alternatively you can leave out the page name, and all pages in the document will be exported, with the exception of the symbols page.
-
-Each artboard on a page will be exported into the catalogue, using the artboard name to determine the exact path and asset type, and the export presets that you've specified in Sketch.
-
 *Note*: This tool can be run manually, but is really intended to be run from a Run Script phase in Xcode, as part of your build.
+
+## Usage
+
+### Single Catalogue
+
+To export all artboards on a page to an asset catalogue of the same name:
+
+    `sketchx Document.sketch <page> <path>`
+
+Each artboard on the page will be exported into the catalogue.
+
+The artboard name should be set in Sketch to reflect the name and type of the asset - for example "AppIcon.appiconset/AppIcon".
+
+Export presets should be set up for each size/scale variation that you require.
+
+The catalogue will be exported into the location specified by `<path>`.
+
+### Renaming
+
+If you want to use a catalogue name for a page, you can specify it along with the page name:
+
+    `sketchx Document.sketch <page>=<catalog> <path>`
+
+
+### Multiple Catalogues
+
+To export multiple pages in a single go, supply a comma-delimited list of page names:
+
+    `sketchx Document.sketch "macOS,iOS" Assets/`
+
+In the example above, the pages called "macOS" and "iOS" will be exported to `Assets/macOS.xcassets` and `Assets/iOS.xcassets` respectively.
+
+### All Pages
+
+Alternatively you can leave out the page name to export all pages:
+
+    `sketchx Document.sketch <path>`
+
+*Note*: this will skip any page called "Symbols". If you have a page called Symbols that you want to export, you'll have to name it explicitly.
+
 
 ## Building
 
@@ -26,7 +58,7 @@ Run with `.build/debug/sketchx`.
 Install by copying the executable somewhere, eg `sudo cp .build/debug/sketchx /usr/local/bin/`.
 
 
-## Usage
+## Example
 
 If you have a catalogue called "Assets.xcassets", containing an icon set called "AppIcon", and an image set called "Image".
 
