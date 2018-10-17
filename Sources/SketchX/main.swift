@@ -10,17 +10,30 @@ class Exporter {
     let document: String
     let output: String
     let pages: [String]
+    let aliases: [String:String]
     let runner = Runner(for: sketchToolURL())
-    var files: [String] = []
 
-    init(document: String, pages: String?, output: String) {
+    init(document: String, pages pageList: String?, output: String) {
+
+        var aliases = [String:String]()
+        var pages = [String]()
+        if let pageList = pageList {
+            for page in pageList.split(separator: ",") {
+                let split = page.split(separator: "=")
+                if split.count > 1 {
+                    let name = String(split[0])
+                    pages.append(name)
+                    aliases[name] = String(split[1])
+                } else {
+                    pages.append(String(page))
+                }
+            }
+        }
+
         self.document = document
         self.output = output
-        if let pages = pages {
-            self.pages = pages.split(separator: ",").map { String($0) }
-        } else {
-            self.pages = []
-        }
+        self.pages = pages
+        self.aliases = aliases
     }
 
     func export() {
@@ -54,10 +67,7 @@ class Exporter {
     func process(artboard: [String:Any], catalogue: String) {
         if let name = artboard["name"] as? String, let id = artboard["id"] as? String {
             let catURL = URL(fileURLWithPath: output).appendingPathComponent(catalogue).appendingPathExtension("xcassets")
-            let boardURL = catURL.appendingPathComponent(name)
-            try? FileManager.default.createDirectory(at: boardURL, withIntermediateDirectories: true, attributes:nil)
             if let _ = try? runner.sync(arguments:["export", "artboards", document, "--items=\(id)", "--output=\(catURL.path)"]) {
-                files.append(boardURL.path)
                 print("- exported \(name).")
             } else {
                 print("- failed to export \(name).")
@@ -76,9 +86,15 @@ class Exporter {
     func process(page: [String:Any]) {
         if let name = page["name"] as? String, let artboards = page["artboards"] as? [[String:Any]] {
             if shouldExport(page: name) {
-                print("\nExporting catalogue \(name):")
+                let alias = aliases[name] ?? name
+                if alias != name {
+                    print("\nExporting \(name) as \(alias).xcassets:")
+                } else {
+                    print("\nExporting \(name).xcassets:")
+                }
+
                 for artboard in artboards {
-                    process(artboard: artboard, catalogue: name)
+                    process(artboard: artboard, catalogue: alias)
                 }
             }
         }
