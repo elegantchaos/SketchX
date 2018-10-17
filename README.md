@@ -10,6 +10,7 @@ Each artboard on the page will be exported into the catalogue, using the artboar
 
 If there's a page called "Symbols", it will be ignored.
 
+*Note*: This tool can be run manually, but is really intended to be run from a Run Script phase in Xcode, as part of your build.
 
 ## Building
 
