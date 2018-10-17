@@ -22,7 +22,7 @@ Run with `.build/debug/sketchx`.
 
 ## Installing
 
-Install by copying the executable somewhere, eg `cp .build/debug/sketchx /usr/local/bin/`.
+Install by copying the executable somewhere, eg `sudo cp .build/debug/sketchx /usr/local/bin/`.
 
 
 ## Usage
