@@ -52,8 +52,10 @@ class Exporter {
 
     func process(page: [String:Any]) {
         if let name = page["name"] as? String, let artboards = page["artboards"] as? [[String:Any]] {
-            for artboard in artboards {
-                process(artboard: artboard, catalogue: name)
+            if name != "Symbols" {
+                for artboard in artboards {
+                    process(artboard: artboard, catalogue: name)
+                }
             }
         }
     }
