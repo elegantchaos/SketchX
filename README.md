@@ -26,3 +26,29 @@ You have to create the structure first up in Xcode, use `sketchx` to do an initi
 exported will then show up, unassigned, in the Xcode user interface. You can then drag them into the various slots
 in the image/iconset. Once you've done this, Xcode will remember the assignments. Running `sketchx` again will just
 re-export the images, with no further adjustments required in Xcode.
+
+
+## Building
+
+Fetch the contents of this repository with `git clone https://github.com/elegantchaos/SketchX.git`.
+
+Build, using `swift build`.
+
+Run with `.build/debug/sketchx`.
+
+## Installing
+
+Install by copying the executable somewhere, eg `cp .build/debug/sketchx /usr/local/bin/`.
+
+
+## Future
+
+This is a quick & dirty hack, which could be improved.
+
+Some ideas:
+
+- skip any symbols page
+- pass in the names of page(s) to export
+- pass in alternative names somehow
+- write the Contents.json and create the complete structure if it's missing
+- add a Sketch plugin which downloads/builds/runs this tool from within Sketch
