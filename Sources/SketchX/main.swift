@@ -47,7 +47,7 @@ class Exporter {
         if let name = artboard["name"] as? String, let id = artboard["id"] as? String {
             let catURL = URL(fileURLWithPath: output).appendingPathComponent(catalogue).appendingPathComponent(name)
             try? FileManager.default.createDirectory(at: catURL, withIntermediateDirectories: true, attributes:nil)
-        if let _ = try? runner.sync(arguments:["export", "artboards", document, "--items=\(id)", "--output=\(catalogue).xcassets"]) {
+        if let _ = try? runner.sync(arguments:["export", "artboards", document, "--items=\(id)", "--output=\(output)/\(catalogue).xcassets"]) {
                 print("- exported \(name).")
             } else {
                 print("- failed to export \(name).")
