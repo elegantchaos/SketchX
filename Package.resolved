@@ -27,6 +27,15 @@
           "revision": "2cc9e50d5725ebe9beed158f9b603cfffbaf67c3",
           "version": "1.0.11"
         }
+      },
+      {
+        "package": "Runner",
+        "repositoryURL": "https://github.com/elegantchaos/Runner",
+        "state": {
+          "branch": null,
+          "revision": "a2d1f82dbb519a96d4332230f1425fbaeaf4fe1f",
+          "version": "1.0.0"
+        }
       }
     ]
   },
