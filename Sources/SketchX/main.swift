@@ -17,6 +17,8 @@ class Exporter {
     }
 
     func export() {
+        let docName = URL(fileURLWithPath: document).lastPathComponent
+        print("Exporting from \(docName).")
         if let result = try? runner.sync(arguments:["list", "artboards", document]) {
             if result.status == 0 {
                 let json = result.stdout
@@ -25,6 +27,8 @@ class Exporter {
                         process(dict)
                     }
                 }
+            } else {
+                print("Failed to run sketchtool.")
             }
         }
     }
@@ -51,11 +55,15 @@ class Exporter {
     }
 
     func process(page: [String:Any]) {
+        print(page)
         if let name = page["name"] as? String, let artboards = page["artboards"] as? [[String:Any]] {
             if name != "Symbols" {
+                print("Exporting catalogue \(name).")
                 for artboard in artboards {
                     process(artboard: artboard, catalogue: name)
                 }
+            } else {
+                print("Skipping symbols.")
             }
         }
     }
@@ -69,7 +77,7 @@ class Exporter {
     }
 }
 
-guard CommandLine.argc > 1 else {
+guard CommandLine.argc == 3 else {
     print("Usage: sketchx MyDoc.sketch path/to/output")
     exit(1)
 }
