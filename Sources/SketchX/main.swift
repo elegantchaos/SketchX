@@ -9,11 +9,18 @@ import Runner
 class Exporter {
     let document: String
     let output: String
+    let pages: [String]
     let runner = Runner(for: sketchToolURL())
+    var files: [String] = []
 
-    init(document: String, output: String) {
+    init(document: String, pages: String?, output: String) {
         self.document = document
         self.output = output
+        if let pages = pages {
+            self.pages = pages.split(separator: ",").map { String($0) }
+        } else {
+            self.pages = []
+        }
     }
 
     func export() {
@@ -46,9 +53,11 @@ class Exporter {
 
     func process(artboard: [String:Any], catalogue: String) {
         if let name = artboard["name"] as? String, let id = artboard["id"] as? String {
-            let catURL = URL(fileURLWithPath: output).appendingPathComponent(catalogue).appendingPathComponent(name)
-            try? FileManager.default.createDirectory(at: catURL, withIntermediateDirectories: true, attributes:nil)
-        if let _ = try? runner.sync(arguments:["export", "artboards", document, "--items=\(id)", "--output=\(output)/\(catalogue).xcassets"]) {
+            let catURL = URL(fileURLWithPath: output).appendingPathComponent(catalogue).appendingPathExtension("xcassets")
+            let boardURL = catURL.appendingPathComponent(name)
+            try? FileManager.default.createDirectory(at: boardURL, withIntermediateDirectories: true, attributes:nil)
+            if let _ = try? runner.sync(arguments:["export", "artboards", document, "--items=\(id)", "--output=\(catURL.path)"]) {
+                files.append(boardURL.path)
                 print("- exported \(name).")
             } else {
                 print("- failed to export \(name).")
@@ -56,15 +65,21 @@ class Exporter {
         }
     }
 
+    func shouldExport(page name: String) -> Bool {
+        if pages.count == 0 {
+            return name != "Symbols"
+        } else {
+            return pages.contains(name)
+        }
+    }
+
     func process(page: [String:Any]) {
         if let name = page["name"] as? String, let artboards = page["artboards"] as? [[String:Any]] {
-            if name != "Symbols" {
+            if shouldExport(page: name) {
                 print("\nExporting catalogue \(name):")
                 for artboard in artboards {
                     process(artboard: artboard, catalogue: name)
                 }
-            } else {
-                print("Skipping symbols.")
             }
         }
     }
@@ -81,10 +96,24 @@ class Exporter {
     }
 }
 
-guard CommandLine.argc == 3 else {
-    print("Usage: sketchx MyDoc.sketch path/to/output")
+let output: String
+let pages: String?
+
+switch CommandLine.argc {
+case 3:
+    output = CommandLine.arguments[2]
+    pages = nil
+case 4:
+    output = CommandLine.arguments[3]
+    pages = CommandLine.arguments[2]
+    break
+
+default:
+    print("Usage: sketchx MyDoc.sketch Path/To/Export/To")
+    print("Usage: sketchx MyDoc.sketch PageToExport Path/To/Export/To")
     exit(1)
 }
 
-let exporter = Exporter(document: CommandLine.arguments[1], output: CommandLine.arguments[2])
+let document = CommandLine.arguments[1]
+let exporter = Exporter(document: document, pages: pages, output: output)
 exporter.export()

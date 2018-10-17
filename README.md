@@ -2,13 +2,13 @@
 
 A simple tool to help with exporting Sketch documents to Xcode asset catalogues.
 
-Usage: `sketchx Document.sketch Output/Path/`
+Usage: `sketchx Document.sketch PagesToOutput Output/Path/`
 
-Each page of the document will be exported to an asset catalogue, using the page name as the catalogue name.
+The specified pages (a comma-delimited list) of the document will be exported to an asset catalogue, using the page name as the catalogue name.
 
-Each artboard on the page will be exported into the catalogue, using the artboard name to determine the exact path and asset type.
+Alternatively you can leave out the page name, and all pages in the document will be exported, with the exception of the symbols page.
 
-If there's a page called "Symbols", it will be ignored.
+Each artboard on a page will be exported into the catalogue, using the artboard name to determine the exact path and asset type, and the export presets that you've specified in Sketch.
 
 *Note*: This tool can be run manually, but is really intended to be run from a Run Script phase in Xcode, as part of your build.
 
@@ -40,10 +40,10 @@ An example document can be seen in `Example/Example.sketch`.
 
 You can modify it and then export with the following command (from the root SketchX folder):
 
-    `swift run sketchx Example/Example.sketch Example/Example/`
+    `swift run sketchx Example/Example.sketch Assets Example/Example/`
 
 
-Try modifying
+Try modifying the Sketch document and re-exporting; you should see the assets change in Xcode.
 
 
 ## Contents.json
@@ -63,7 +63,6 @@ This is a quick & dirty hack, which could be improved.
 
 Some ideas:
 
-- pass in the names of page(s) to export
 - pass in alternative names somehow
 - write the Contents.json and create the complete structure if it's missing
 - add a Sketch plugin which downloads/builds/runs this tool from within Sketch
