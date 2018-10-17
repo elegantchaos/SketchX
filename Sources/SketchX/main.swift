@@ -34,31 +34,31 @@ class Exporter {
     }
 
     class func sketchURL() -> URL {
-        return URL(fileURLWithPath:"/Applications/Sketch.app")
+        let url = URL(fileURLWithPath:"/Applications/Sketch.app")
+        return url
     }
 
     class func sketchToolURL() -> URL {
-        return sketchURL().appendingPathComponent("Contents/Resources/sketchtool/bin/sketchtool")
+        let url = sketchURL().appendingPathComponent("Contents/Resources/sketchtool/bin/sketchtool")
+        return url
     }
 
     func process(artboard: [String:Any], catalogue: String) {
         if let name = artboard["name"] as? String, let id = artboard["id"] as? String {
             let catURL = URL(fileURLWithPath: output).appendingPathComponent(catalogue).appendingPathComponent(name)
             try? FileManager.default.createDirectory(at: catURL, withIntermediateDirectories: true, attributes:nil)
-            if let result = try? runner.sync(arguments:["export", "artboards", document, "--items=\(id)", "--output=\(catalogue).xcassets"]) {
-                print(result.stdout)
-                print(result.stderr)
+        if let _ = try? runner.sync(arguments:["export", "artboards", document, "--items=\(id)", "--output=\(catalogue).xcassets"]) {
+                print("- exported \(name).")
             } else {
-                print("failed to export \(name)")
+                print("- failed to export \(name).")
             }
         }
     }
 
     func process(page: [String:Any]) {
-        print(page)
         if let name = page["name"] as? String, let artboards = page["artboards"] as? [[String:Any]] {
             if name != "Symbols" {
-                print("Exporting catalogue \(name).")
+                print("\nExporting catalogue \(name):")
                 for artboard in artboards {
                     process(artboard: artboard, catalogue: name)
                 }
@@ -73,6 +73,9 @@ class Exporter {
             for page in pages {
                 process(page: page)
             }
+            print("\nDone.")
+        } else {
+            print("\nPage data is missing.")
         }
     }
 }
@@ -82,5 +85,5 @@ guard CommandLine.argc == 3 else {
     exit(1)
 }
 
-let exporter = Exporter(document: CommandLine.arguments[0], output: CommandLine.arguments[1])
+let exporter = Exporter(document: CommandLine.arguments[1], output: CommandLine.arguments[2])
 exporter.export()
