@@ -29,6 +29,7 @@ class Exporter {
                 }
             } else {
                 print("Failed to run sketchtool.")
+                print(result.stderr)
             }
         }
     }

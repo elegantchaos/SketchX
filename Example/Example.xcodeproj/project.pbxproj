@@ -67,6 +67,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 22536F41217742450050707A /* Build configuration list for PBXNativeTarget "Example" */;
 			buildPhases = (
+				22536F44217751050050707A /* Export Assets From Sketch */,
 				22536F2F217742430050707A /* Sources */,
 				22536F30217742430050707A /* Frameworks */,
 				22536F31217742430050707A /* Resources */,
@@ -124,6 +125,31 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		22536F44217751050050707A /* Export Assets From Sketch */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Example.sketch",
+			);
+			name = "Export Assets From Sketch";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"",
+				"$(SRCROOT)/Example/Assets.xcassets/AppIcon.appiconset/Icon16.png",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "TOOL=../.build/debug/sketchx\n\nif [[ ! -e \"$TOOL\" ]]\nthen\n  swift build\nfi\n\n\"$TOOL\" Example.sketch Example/\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		22536F2F217742430050707A /* Sources */ = {
