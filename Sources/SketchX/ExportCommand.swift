@@ -105,7 +105,7 @@ class Exporter {
             for page in pages {
                 process(page: page)
             }
-            print("\nDone.")
+            print("")
         } else {
             print("\nPage data is missing.")
         }
