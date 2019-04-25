@@ -37,25 +37,21 @@ class Exporter {
         self.aliases = aliases
     }
     
-    func export() -> Result {
+    func export() throws -> Result {
         let docName = URL(fileURLWithPath: document).lastPathComponent
         print("Exporting from \(docName).")
-        if let result = try? runner.sync(arguments:["list", "artboards", document]) {
-            if result.status == 0 {
-                let json = result.stdout
-                if let data = json.data(using: .utf8) {
-                    if let object = try? JSONSerialization.jsonObject(with: data, options:[]), let dict = object as? [String:Any] {
-                        process(dict)
-                        return .ok
-                    }
-                }
-            } else {
-                return .runFailed
+        let result = try runner.sync(arguments:["list", "artboards", document])
+        if result.status == 0 {
+            let json = result.stdout
+            guard let data = json.data(using: .utf8), let object = try? JSONSerialization.jsonObject(with: data, options:[]), let dict = object as? [String:Any] else {
+                return .couldntDecodeResults
             }
+            
+            process(dict)
+            return .ok
         } else {
-            return .runFailed
+            return Result.exportFailed.adding(supplementary: result.stderr)
         }
-        return .runFailed
     }
     
     class func sketchURL() -> URL {
@@ -116,17 +112,22 @@ class Exporter {
     }
 }
 
+extension Result {
+    static let exportFailed = Result(100, "Exporting failed.")
+    static let couldntDecodeResults = Result(100, "Couldn't decode the results from sketchtool.")
+}
+
 class ExportCommand: Command {
     override var usage: [String] { return [
         "<document> <path>",
-        "<document> <page> <path>"
+        "<document> <pages> <path>"
         ]
     }
     
     override var arguments: [String : String] {
         return [
             "<document>" : "The sketch document to export from",
-            "<page>" : "The page to export from.",
+            "<pages>" : "The name of one or more pages to export from (comma separated).",
             "<path>" : "The path to export to"
         ]
     }
@@ -138,6 +139,10 @@ class ExportCommand: Command {
         let output = args.argument("path")
         let exporter = Exporter(document: document, pages: pages.isEmpty ? nil : pages, output: output)
         
-        return exporter.export()
+        do {
+            return try exporter.export()
+        } catch {
+            return Result.exportFailed.adding(supplementary: String(describing: error))
+        }
     }
 }
