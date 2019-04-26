@@ -118,18 +118,20 @@ extension Result {
 }
 
 class ExportCommand: Command {
-    override var usage: [String] { return [
-        "<document> <path>",
-        "<document> <pages> <path>"
-        ]
-    }
-    
-    override var arguments: [String : String] {
-        return [
-            "<document>" : "The sketch document to export from",
-            "<pages>" : "The name of one or more pages to export from (comma separated).",
-            "<path>" : "The path to export to"
-        ]
+    override var description: Command.Description {
+        return Description(
+            name: "",
+            help: "",
+            usage: [
+                "<document> <path>",
+                "<document> <pages> <path>"
+            ],
+            arguments: [
+                "<document>" : "The sketch document to export from",
+                "<pages>" : "The name of one or more pages to export from (comma separated).",
+                "<path>" : "The path to export to"
+            ]
+        )
     }
     
     override func run(shell: Shell) throws -> Result {

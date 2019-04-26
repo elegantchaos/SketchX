@@ -725,7 +725,7 @@
             "OBJ_17",
             "OBJ_22"
          );
-         name = "CommandShell 1.0.1";
+         name = "CommandShell 1.0.2";
          path = "";
          sourceTree = "SOURCE_ROOT";
       };
@@ -1290,7 +1290,7 @@
          isa = "PBXFileReference";
          explicitFileType = "sourcecode.swift";
          name = "Package.swift";
-         path = "/Users/sam/Projects/SketchX/.build/checkouts/CommandShell/Package.swift";
+         path = "/Users/sam/Projects/Bookish/Packages/SketchX/.build/checkouts/CommandShell/Package.swift";
          sourceTree = "<group>";
       };
       "OBJ_220" = {
@@ -1346,7 +1346,7 @@
          isa = "PBXFileReference";
          explicitFileType = "sourcecode.swift";
          name = "Package.swift";
-         path = "/Users/sam/Projects/SketchX/.build/checkouts/Arguments/Package.swift";
+         path = "/Users/sam/Projects/Bookish/Packages/SketchX/.build/checkouts/Arguments/Package.swift";
          sourceTree = "<group>";
       };
       "OBJ_27" = {
@@ -1539,7 +1539,7 @@
          isa = "PBXFileReference";
          explicitFileType = "sourcecode.swift";
          name = "Package.swift";
-         path = "/Users/sam/Projects/SketchX/.build/checkouts/docopt.swift/Package.swift";
+         path = "/Users/sam/Projects/Bookish/Packages/SketchX/.build/checkouts/docopt.swift/Package.swift";
          sourceTree = "<group>";
       };
       "OBJ_45" = {
@@ -1648,7 +1648,7 @@
          isa = "PBXFileReference";
          explicitFileType = "sourcecode.swift";
          name = "Package.swift";
-         path = "/Users/sam/Projects/SketchX/.build/checkouts/Logger/Package.swift";
+         path = "/Users/sam/Projects/Bookish/Packages/SketchX/.build/checkouts/Logger/Package.swift";
          sourceTree = "<group>";
       };
       "OBJ_58" = {
@@ -1667,7 +1667,7 @@
             "OBJ_60"
          );
          name = "Runner";
-         path = ".build/checkouts/Runner/Sources/Runner";
+         path = ".build/checkouts/Runner-7835251855803272158/Sources/Runner";
          sourceTree = "SOURCE_ROOT";
       };
       "OBJ_6" = {
@@ -1685,7 +1685,7 @@
          isa = "PBXFileReference";
          explicitFileType = "sourcecode.swift";
          name = "Package.swift";
-         path = "/Users/sam/Projects/SketchX/.build/checkouts/Runner/Package.swift";
+         path = "/Users/sam/Projects/Bookish/Packages/SketchX/.build/checkouts/Runner-7835251855803272158/Package.swift";
          sourceTree = "<group>";
       };
       "OBJ_62" = {
@@ -1693,11 +1693,11 @@
          children = (
             "Docopt::Docopt::Product",
             "SketchX::SketchXTests::Product",
-            "Runner::Runner::Product",
-            "Logger::Logger::Product",
-            "CommandShell::CommandShell::Product",
+            "SketchX::SketchX::Product",
             "Arguments::Arguments::Product",
-            "SketchX::SketchX::Product"
+            "CommandShell::CommandShell::Product",
+            "Logger::Logger::Product",
+            "Runner::Runner::Product"
          );
          name = "Products";
          path = "";
