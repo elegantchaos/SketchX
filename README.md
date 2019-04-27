@@ -26,7 +26,7 @@ The catalogue will be exported into the location specified by `<path>`.
 
 If you want to use a catalogue name for a page, you can specify it along with the page name:
 
-    `sketchx Document.sketch <page>=<catalog> <path>`
+`sketchx Document.sketch <page>:<catalog> <path>`
 
 ### Multiple Catalogues
 

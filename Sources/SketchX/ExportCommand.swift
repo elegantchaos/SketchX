@@ -20,7 +20,7 @@ class Exporter {
         var pages = [String]()
         if let pageList = pageList {
             for page in pageList.split(separator: ",") {
-                let split = page.split(separator: "=")
+                let split = page.split(separator: ":")
                 if split.count > 1 {
                     let name = String(split[0])
                     pages.append(name)
