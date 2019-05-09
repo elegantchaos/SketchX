@@ -137,7 +137,7 @@ class ExportCommand: Command {
     override func run(shell: Shell) throws -> Result {
         let args = shell.arguments
         let document = args.argument("document")
-        let pages = args.argument("page")
+        let pages = args.argument("pages")
         let output = args.argument("path")
         let exporter = Exporter(document: document, pages: pages.isEmpty ? nil : pages, output: output)
         
