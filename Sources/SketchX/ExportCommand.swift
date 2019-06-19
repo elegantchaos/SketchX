@@ -12,7 +12,7 @@ class Exporter {
     let output: String
     let pages: [String]
     let aliases: [String:String]
-    let runner = Runner(for: sketchToolURL())
+    let runner = Runner(for: Runner.find(command: "sketchtool", default: "/Applications/Sketch.app/Contents/Resources/sketchtool/bin/sketchtool"))
     
     init(document: String, pages pageList: String?, output: String) {
         
@@ -52,16 +52,6 @@ class Exporter {
         } else {
             return Result.exportFailed.adding(supplementary: result.stderr)
         }
-    }
-    
-    class func sketchURL() -> URL {
-        let url = URL(fileURLWithPath:"/Applications/Sketch.app")
-        return url
-    }
-    
-    class func sketchToolURL() -> URL {
-        let url = sketchURL().appendingPathComponent("Contents/Resources/sketchtool/bin/sketchtool")
-        return url
     }
     
     func process(artboard: [String:Any], catalogue: String) {
@@ -137,7 +127,7 @@ class ExportCommand: Command {
     override func run(shell: Shell) throws -> Result {
         let args = shell.arguments
         let document = args.argument("document")
-        let pages = args.argument("page")
+        let pages = args.argument("pages")
         let output = args.argument("path")
         let exporter = Exporter(document: document, pages: pages.isEmpty ? nil : pages, output: output)
         
