@@ -113,13 +113,14 @@ class ExportCommand: Command {
             name: "",
             help: "",
             usage: [
-                "<document> <path>",
-                "<document> <pages> <path>"
+                "<document> <path> [--pages=<pages>]"
             ],
             arguments: [
                 "<document>" : "The sketch document to export from",
-                "<pages>" : "The name of one or more pages to export from (comma separated).",
                 "<path>" : "The path to export to"
+            ],
+            options: [
+                "pages" : "The name of one or more pages to export from (comma separated)."
             ]
         )
     }
@@ -127,9 +128,9 @@ class ExportCommand: Command {
     override func run(shell: Shell) throws -> Result {
         let args = shell.arguments
         let document = args.argument("document")
-        let pages = args.argument("pages")
+        let pages = args.option("pages")
         let output = args.argument("path")
-        let exporter = Exporter(document: document, pages: pages.isEmpty ? nil : pages, output: output)
+        let exporter = Exporter(document: document, pages: pages, output: output)
         
         do {
             return try exporter.export()

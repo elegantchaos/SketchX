@@ -80,12 +80,12 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "Mac:Assets"
+            argument = "output"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "output"
-            isEnabled = "YES">
+            argument = "--pages=Mac:Assets"
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>
